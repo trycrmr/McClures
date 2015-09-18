@@ -1,0 +1,7 @@
+<h1>Search for a Politician</h1>
+
+<%= form_tag("/search", method: "get") do %>
+  <%= label_tag(:query, "Location") %>
+  <%= text_field_tag(:query) %>
+  <%= submit_tag("Search") %>
+<% end %>
