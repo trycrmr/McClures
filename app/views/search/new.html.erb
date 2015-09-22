@@ -1,8 +1,9 @@
-<h1>INDEX Search for a Politician</h1>
+<h1>NEW Search for a Politician</h1>
 
 <%= @api_error %>
 
-<%= form_tag("/search", method: "get") do %>
+<%= flash[:error] %>
+<%= form_tag("/search/new", method: "get") do %>
   <%= label_tag(:user_zip_code, "Location") %>
   <%= text_field_tag(:user_zip_code) %>
   <%= submit_tag("Search") %>
