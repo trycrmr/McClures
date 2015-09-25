@@ -1,14 +1,15 @@
 <h1>NEW Search for a Politician</h1>
 
-<%= @api_error %>
-
 <%= flash[:error] %>
 <%= form_tag("/search/new", method: "get") do %>
-  <%= label_tag(:user_zip_code, "Location") %>
+  <%= label_tag(:user_zip_code, "Zip Code") %>
   <%= text_field_tag(:user_zip_code) %>
   <%= submit_tag("Search") %>
 <% end %>
-<hr />
-<%= @api_call_result %>
-<hr />
-<%= @congressman %>
+  	<% if @search_results.empty? %>
+  		<%= @message_no_search_results %>
+  	<% else %>
+  		<% @search_results.each do |this_result| %>
+  		<%= this_result.first_name %><br />
+  		<% end %>
+  	<% end %>

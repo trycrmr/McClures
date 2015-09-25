@@ -4,33 +4,36 @@ require 'pp'
 
 class SearchController < ApplicationController
   def index
-  	@users_submitted_zip_code = params[:user_zip_code]
-  	@user_parameters = {"zip_code" => "#{@users_submitted_zip_code}"}
-  	@api_key = ENV['API_KEY_SUNLIGHTFOUNDATION']
-  	@api_key_url_string = "?apikey=#{@api_key}"
-  	@api_call = RestClient.get(build_api_call_for_Sunlight_Foundation(@user_parameters, @api_key_url_string))
-  	@api_call_result = JSON.load(@api_call)
-  	if !@api_call_result["results"].empty?
-  		@congressman = "#{@api_call_result["results"][0]["first_name"]} #{@api_call_result["results"][0]["last_name"]}"
-  	else
-  		@api_error = "API call failed"
-  		puts @api_error
-  	end
+  	# @users_submitted_zip_code = params[:user_zip_code]
+  	# @user_parameters = {"zip_code" => "#{@users_submitted_zip_code}"}
+  	# @api_key = ENV['API_KEY_SUNLIGHTFOUNDATION']
+  	# @api_key_url_string = "?apikey=#{@api_key}"
+  	# @api_call = RestClient.get(build_api_call_for_Sunlight_Foundation(@user_parameters, @api_key_url_string))
+  	# @api_call_result = JSON.load(@api_call)
+  	# if !@api_call_result["results"].empty?
+  	# 	@congressman = "#{@api_call_result["results"][0]["first_name"]} #{@api_call_result["results"][0]["last_name"]}"
+  	# else
+  	# 	@api_error = "API call failed"
+  	# 	puts @api_error
+  	# end
   end
   
   def new
   	@users_submitted_zip_code = params[:user_zip_code]
-  	@user_parameters = {"zip_code" => "#{@users_submitted_zip_code}"}
-  	@api_key = ENV['API_KEY_SUNLIGHTFOUNDATION']
-  	@api_key_url_string = "?apikey=#{@api_key}"
-  	@api_call = RestClient.get(build_api_call_for_Sunlight_Foundation(@user_parameters, @api_key_url_string))
-  	@api_call_result = JSON.load(@api_call)
-  	if !@api_call_result["results"].empty?
-  		@congressman = "#{@api_call_result["results"][0]["first_name"]} #{@api_call_result["results"][0]["last_name"]}"
-  	else
-  		@api_error = "API call failed"
-  		puts @api_error
-  	end
+  	@search_results = API_Politician.get_array_of_politicians_from_SF_Congress_API_call("/legislators/locate", zip: @users_submitted_zip_code)
+  	@message_no_search_results = "Your search did not return any results."
+  	# @users_submitted_zip_code = params[:user_zip_code]
+  	# @user_parameters = {"zip_code" => "#{@users_submitted_zip_code}"}
+  	# @api_key = ENV['API_KEY_SUNLIGHTFOUNDATION']
+  	# @api_key_url_string = "?apikey=#{@api_key}"
+  	# @api_call = RestClient.get(build_api_call_for_Sunlight_Foundation(@user_parameters, @api_key_url_string))
+  	# @api_call_result = JSON.load(@api_call)
+  	# if !@api_call_result["results"].empty?
+  	# 	@congressman = "#{@api_call_result["results"][0]["first_name"]} #{@api_call_result["results"][0]["last_name"]}"
+  	# else
+  	# 	@api_error = "API call failed"
+  	# 	puts @api_error
+  	# end
   end
 
   # def create
