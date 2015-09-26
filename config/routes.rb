@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'favorites/index'
+
+  get 'favorites/create'
+
   get 'politician/show'
 
   devise_for :users

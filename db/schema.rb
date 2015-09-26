@@ -11,12 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926161251) do
+ActiveRecord::Schema.define(version: 20150926225413) do
 
   create_table "favorites", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "politician_id"
+    t.integer  "user_id"
   end
+
+  add_index "favorites", ["politician_id"], name: "index_favorites_on_politician_id"
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
 
   create_table "politicians", force: :cascade do |t|
     t.datetime "created_at",  null: false
