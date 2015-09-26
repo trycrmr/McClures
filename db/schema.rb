@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926141145) do
+ActiveRecord::Schema.define(version: 20150926161251) do
 
   create_table "favorites", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -19,14 +19,16 @@ ActiveRecord::Schema.define(version: 20150926141145) do
   end
 
   create_table "politicians", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "bioguide_id"
   end
 
   create_table "searches", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"
+    t.text     "parameters"
   end
 
   add_index "searches", ["user_id"], name: "index_searches_on_user_id"
