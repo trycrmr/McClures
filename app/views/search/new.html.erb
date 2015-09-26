@@ -11,7 +11,7 @@
 	<%= @message_no_search_results %> 
 <% else %>
 	<% @search_results.each do |this_result| %>
-	<%= this_result.first_name %>, BIOGUIDE ID: <%= this_result.bioguide_id %><br />
+	<%= this_result.first_name %>, BIOGUIDE ID: <%= this_result.bioguide_id %>, <%= link_to "Show", politician_show_path(bioguide_id: this_result.bioguide_id)  %><br />
   <% end %>
 <% end %>
 

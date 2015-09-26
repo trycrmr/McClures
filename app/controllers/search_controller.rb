@@ -11,7 +11,7 @@ class SearchController < ApplicationController
   	@recent_searches = Search.last(5).reverse
 
   	@users_submitted_zip_code = params[:user_zip_code]
-  	@search_results = API_Politician.get_array_of_politicians_from_SF_Congress_API_call("/legislators/locate", zip: @users_submitted_zip_code)
+  	@search_results = API_Politician.get_array_of_politicians_from_SF_Congress_API_call("search legislators by location", zip: @users_submitted_zip_code)
   	#IF THE SEARCH IS SUCCESSFUL WRITE THE SEARCH TO THE DATABASE AND SAVE THE POLITICIANS TO THE DATABASE IF THEY ARE NOT ALREADY SAVED TO THE DATABASE
   	 unless @search_results.empty?
   	 	#WRITE THIS SEARCH TO THE DATABASE

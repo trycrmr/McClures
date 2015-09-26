@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'politician/show'
+
   devise_for :users
   root 'search#new'
   resources :search

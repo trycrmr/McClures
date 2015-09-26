@@ -29,11 +29,14 @@ class API_Politician
       the_api_method_path ? the_api_method_path : "No Sunlight Foundation Congress API path found for that nickname. See the API_Politician::API_CALLS_SUNLIGHT_FOUNDATION_CONGRESS constant for a hash of all options"
     end
 
-  def self.get_array_of_politicians_from_SF_Congress_API_call(sf_congress_api_call_path, options={})
+  def self.get_array_of_politicians_from_SF_Congress_API_call(sf_congress_api_call_nickname, options={})
     {
-      zip: options[:zip]
+      zip: options[:zip],
+      bioguide_id: options[:bioguide_id]
     }
     #^OPTIONS HASH KEYS SHOULD MATCH THE SUNLIGHT FOUNDATION CONGRESS API PARAMATERS
+
+    sf_congress_api_call_path = API_Politician.get_SF_Congress_API_call_path(sf_congress_api_call_nickname)
 
     # hit api for politian info
     api_rest_endpoint = "https://congress.api.sunlightfoundation.com#{sf_congress_api_call_path}"
@@ -47,7 +50,9 @@ class API_Politician
     end    
 
     url_for_api_call = "#{api_rest_endpoint}#{api_key_url_string}#{url_params_string}"
+    puts '***CALL API WITH THIS URL***'
     puts url_for_api_call
+    puts '***CALLED API WITH THIS URL***'
     api_call = RestClient.get(url_for_api_call)
 
     # take json data make sure I have array of POLITICIANS
@@ -74,7 +79,8 @@ class API_Politician
     if @politician_info.keys.include? method_name.to_s
       @politician_info[method_name.to_s]
     else
-      super
+      #super
+      "This politician does not have a #{method_name.to_s}"
     end
   end
 
