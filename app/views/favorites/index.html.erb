@@ -1,2 +1,9 @@
 <h1>Favorites#index</h1>
-<p>Find me in app/views/favorites/index.html.erb</p>
+
+	<% @this_users_favorite_politicians.each do |this_favorite_politician| %>
+		<%= this_favorite_politician.first_name %>, BIOGUIDE ID: <%= this_favorite_politician.bioguide_id %> | 
+		<%= link_to "Show", politician_show_path(bioguide_id: this_favorite_politician.bioguide_id)  %>
+		<br />
+  <% end %>
+
+  <%= link_to "New Search", new_search_path  %>
