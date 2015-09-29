@@ -7,8 +7,8 @@
 <div class='lead text-center'>
 	<%= flash[:error] %>
 	<%= form_tag("/search/new", method: "get") do %>
-	<%= label_tag(:user_zip_code, "Enter your 5-digit zip code") %>
-	<%= text_field_tag(:user_zip_code) %>
+	<%= label_tag(:zip_code, "Enter your 5-digit zip code") %>
+	<%= text_field_tag(:zip_code) %>
 	<%= submit_tag("Find my Politicians") %>
 	<% end %>
 </div>
@@ -44,7 +44,33 @@
 </div><!--END LIST GROUP-->
 <% end %>
 
-<h3>Recent Searches</h3>
-<% @recent_searches.each do |a_previous_search| %>
-<%= link_to "#{a_previous_search.parameters.to_s}", new_search_path(a_previous_search.parameters)  %><br />
-<% end %>
+<div class='row'>
+	<div class='col-md-12'>
+<% if user_signed_in? %>
+	<h3>My Recent Searches</h3>
+	<% this_users_recent_search_text = [] %>
+    <% @this_users_recent_searches.each do |search| %>
+      <% search.parameters.each do |key, value| %> 
+        <% unless ["commit", "action", "controller", "utf8"].include? key %>
+        	<% this_users_recent_search_text.push("#{key.humanize.titleize}, #{value}") %>
+        <% end %>
+      <% end %>
+    <% end %>
+	<% @this_users_recent_searches.each_with_index do |a_previous_search, i| %>
+		<%= link_to "#{this_users_recent_search_text[i]}", new_search_path(a_previous_search.parameters)  %><br />
+	<% end %>
+<% end %>	
+<h3>Everyone's Recent Searches</h3>
+	<% recent_search_text = [] %>
+    <% @recent_searches.each do |search| %>
+      <% search.parameters.each do |key, value| %> 
+        <% unless ["commit", "action", "controller", "utf8"].include? key %>
+        	<% recent_search_text.push("#{key.humanize.titleize}, #{value}") %>
+        <% end %>
+      <% end %>
+    <% end %>
+	<% @recent_searches.each_with_index do |a_previous_search, i| %>
+		<%= link_to "#{recent_search_text[i]}", new_search_path(a_previous_search.parameters)  %><br />
+	<% end %>
+	</div>
+</div>
