@@ -1,15 +1,16 @@
 <% unless user_signed_in? %>
 <div class='lead text-center'>
 	McClures is about bringing you closer to the politicians that represent you.
+	<%# party_name_from_initial(@this_result.party) %>
 </div>
 <% end %>
 
 <div class='lead text-center'>
 	<%= flash[:error] %>
 	<%= form_tag("/search/new", method: "get") do %>
-	<%= label_tag(:zip_code, "Enter your 5-digit zip code") %>
-	<%= text_field_tag(:zip_code) %>
-	<%= submit_tag("Find my Politicians") %>
+	<%= label_tag(:zip_code, "Enter #{user_signed_in? ? 'a' : 'your'} 5-digit zip code") %>
+	<%= text_field_tag(:zip_code, "#{params.has_key?(:zip_code) ? params[:zip_code] : nil}") %>
+	<%= submit_tag("Find #{user_signed_in? ? 'some ' : 'your '}Politicians") %>
 	<% end %>
 </div>
 
@@ -26,16 +27,7 @@
 		<%= this_result.in_office ? "Serving" : "Served" %>
 		<%= "from #{this_result.term_start} to #{this_result.term_end}" %>
 <br />
-		<% case this_result.party %>
-		<% when "R" %>
-		<%= "Republican" %>
-		<% when "D" %>
-		<%= "Democrat" %>
-		<% when "I" %>
-		<%= "Independent" %>
-		<% else %>
-		<%= "No party affiliation" %>
-		<% end %>	
+	<%= party_name_from_initial this_result.party %>
 <br />
 	<%= link_to "View Profile", politician_show_path(bioguide_id: this_result.bioguide_id), class: 'btn btn-info'  %>
 	<%= link_to "Add to Stash", favorites_create_path(bioguide_id: this_result.bioguide_id), class: 'btn btn-primary' %>
